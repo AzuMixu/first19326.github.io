@@ -33,7 +33,9 @@
     <category term="Spring" scheme="https://www.notes.worstone.cn/category/Spring/"/>
     
     
-    <category term="Spring Annotation" scheme="https://www.notes.worstone.cn/tag/Spring-Annotation/"/>
+    <category term="Spring" scheme="https://www.notes.worstone.cn/tag/Spring/"/>
+    
+    <category term="Annotation" scheme="https://www.notes.worstone.cn/tag/Annotation/"/>
     
   </entry>
   
