@@ -8,21 +8,21 @@
     <meta http-equiv="Cache-Control" content="no-siteapp">
     <title>Spring Framework 中的 @ComponentScan 注解</title>
 
-    <link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/gh/first19326/hexo-liveforcode@master/static/font/LongCang.css">
-    <link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/gh/first19326/hexo-liveforcode@master/static/font/Monda.css">
-    <link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/gh/first19326/hexo-liveforcode@master/static/font/NotoSansSC.css">
-    <link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/gh/first19326/hexo-liveforcode@master/static/font/Playball.css">
-    <link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/gh/first19326/hexo-liveforcode@master/static/font/PTMono.css">
-    <link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/gh/first19326/hexo-liveforcode@master/static/font/RobotoSlab.css">
-    <link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/gh/first19326/hexo-liveforcode@master/static/font/Rosario.css">
-    <link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/gh/first19326/hexo-liveforcode@master/static/font/UbuntuMono.css">
+    <link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/font/LongCang.css">
+    <link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/font/Monda.css">
+    <link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/font/NotoSansSC.css">
+    <link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/font/Playball.css">
+    <link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/font/PTMono.css">
+    <link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/font/RobotoSlab.css">
+    <link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/font/Rosario.css">
+    <link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/font/UbuntuMono.css">
 
-    <link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/gh/first19326/hexo-liveforcode@master/static/css/post.css">
+    <link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/css/post.css">
     
-        <link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/gh/first19326/hexo-liveforcode@master/static/css/normal.css">
+        <link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/css/normal.css">
     
 
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/gh/first19326/hexo-liveforcode@master/static/js/jquery-3.4.1.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/js/jquery-3.4.1.min.js"></script>
 
 <link rel="alternate" href="/atom.xml" title="Live For Code" type="application/atom+xml">
 </head>
@@ -67,7 +67,7 @@
 
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">boolean</span> <span class="title">isLiteConfigurationCandidate</span><span class="params">(AnnotationMetadata metadata)</span> </span>&#123;</span><br><span class="line">    <span class="comment">// Do not consider an interface or an annotation...</span></span><br><span class="line">    <span class="keyword">if</span> (metadata.isInterface()) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Any of the typical annotations found?</span></span><br><span class="line">    <span class="keyword">for</span> (String indicator : candidateIndicators) &#123;</span><br><span class="line">        <span class="keyword">if</span> (metadata.isAnnotated(indicator)) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Finally, let&#x27;s look for @Bean methods...</span></span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> metadata.hasAnnotatedMethods(Bean.class.getName());</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">catch</span> (Throwable ex) &#123;</span><br><span class="line">        <span class="keyword">if</span> (logger.isDebugEnabled()) &#123;</span><br><span class="line">            logger.debug(<span class="string">&quot;Failed to introspect @Bean methods on class [&quot;</span> + metadata.getClassName() + <span class="string">&quot;]: &quot;</span> + ex);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
 </ol>
-<h3 id="ComponentScan-直接使用"><a href="#ComponentScan-直接使用" class="headerlink" title="@ComponentScan 直接使用"></a>@ComponentScan 直接使用</h3><p>创建一个 Spring 配置类，直接添加 @ComponentScan 注解。该注解默认会扫描该类所在包下的所有配置类，相当于之前的 <code>&lt;context:component-scan/&gt;</code>。</p>
+<h2 id="ComponentScan-直接使用"><a href="#ComponentScan-直接使用" class="headerlink" title="@ComponentScan 直接使用"></a>@ComponentScan 直接使用</h2><p>创建一个 Spring 配置类，直接添加 @ComponentScan 注解。该注解默认会扫描该类所在包下的所有配置类，相当于之前的 <code>&lt;context:component-scan/&gt;</code>。</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> cn.worstone.config;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.springframework.context.annotation.ComponentScan;</span><br><span class="line"><span class="keyword">import</span> org.springframework.context.annotation.Configuration;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Configuration</span></span><br><span class="line"><span class="meta">@ComponentScan</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SpringConfig</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>创建一个 测试类，使用 AnnotationConfigApplicationContext 对象加载配置类，使用 getBeanDefinitionNames() 方法获取已经注册到容器中的 bean 的名称。</p>
@@ -77,7 +77,7 @@
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">bean name: org.springframework.context.annotation.internalConfigurationAnnotationProcessor</span><br><span class="line">bean name: org.springframework.context.annotation.internalAutowiredAnnotationProcessor</span><br><span class="line">bean name: org.springframework.context.annotation.internalCommonAnnotationProcessor</span><br><span class="line">bean name: org.springframework.context.event.internalEventListenerProcessor</span><br><span class="line">bean name: org.springframework.context.event.internalEventListenerFactory</span><br><span class="line">bean name: springConfig</span><br></pre></td></tr></table></figure>
 
 <p>可以看到，除了 Spring 本身注册的一些 bean 以外，SpringConfig 这个类也注册到容器中了。如果这个配置类使用了 @Import 注解导入了其他的配置类，那么导入的类也会被注册到容器中。</p>
-<h3 id="ComponentScan-指定扫描位置"><a href="#ComponentScan-指定扫描位置" class="headerlink" title="@ComponentScan 指定扫描位置"></a>@ComponentScan 指定扫描位置</h3><p>指定要扫描的位置，需要使用 @ComponentScan 的 valule 属性来配置。创建了一个 dao包，并在包下创建了 UserDao 类。在类上添加 @Repository 注解，说明该类是一个 Component。</p>
+<h2 id="ComponentScan-指定扫描位置"><a href="#ComponentScan-指定扫描位置" class="headerlink" title="@ComponentScan 指定扫描位置"></a>@ComponentScan 指定扫描位置</h2><p>指定要扫描的位置，需要使用 @ComponentScan 的 valule 属性来配置。创建了一个 dao包，并在包下创建了 UserDao 类。在类上添加 @Repository 注解，说明该类是一个 Component。</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> cn.worstone.dao;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.springframework.stereotype.Repository;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Repository</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">UserDao</span> </span>&#123;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>修改配置类 SpringConfig，在 @ComponentScan 注解中指定扫描的位置：</p>
@@ -87,7 +87,7 @@
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">bean name: org.springframework.context.annotation.internalConfigurationAnnotationProcessor</span><br><span class="line">bean name: org.springframework.context.annotation.internalAutowiredAnnotationProcessor</span><br><span class="line">bean name: org.springframework.context.annotation.internalCommonAnnotationProcessor</span><br><span class="line">bean name: org.springframework.context.event.internalEventListenerProcessor</span><br><span class="line">bean name: org.springframework.context.event.internalEventListenerFactory</span><br><span class="line">bean name: springConfig</span><br><span class="line">bean name: userDao</span><br></pre></td></tr></table></figure>
 
 <p>可以看到，UserDao 已经注册到容器中了。</p>
-<h3 id="ComponentScan-设置-excludeFilters-和-includeFilters-使用"><a href="#ComponentScan-设置-excludeFilters-和-includeFilters-使用" class="headerlink" title="@ComponentScan 设置 excludeFilters 和 includeFilters 使用"></a>@ComponentScan 设置 excludeFilters 和 includeFilters 使用</h3><p>使用 excludeFilters 来按照规则排除某些位置的扫描，使用 includeFilters 来按照规则只扫描某些位置。</p>
+<h2 id="ComponentScan-设置-excludeFilters-和-includeFilters-使用"><a href="#ComponentScan-设置-excludeFilters-和-includeFilters-使用" class="headerlink" title="@ComponentScan 设置 excludeFilters 和 includeFilters 使用"></a>@ComponentScan 设置 excludeFilters 和 includeFilters 使用</h2><p>使用 excludeFilters 来按照规则排除某些位置的扫描，使用 includeFilters 来按照规则只扫描某些位置。</p>
 <p>excludeFilters 的参数是一个 Filter[] 数组，然后指定 FilterType 的类型为 ANNOTATION，也就是通过注解来过滤，最后的 value 则是 Service 注解类。配置之后，在 Spring 扫描的时候，就会跳过 cn.worstone 路径下所有被 @Service 注解修饰的类。includeFilters 的参数与 excludeFilters 参数相同。</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> cn.worstone.config;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.springframework.context.annotation.ComponentScan;</span><br><span class="line"><span class="keyword">import</span> org.springframework.context.annotation.Configuration;</span><br><span class="line"><span class="keyword">import</span> org.springframework.context.annotation.FilterType;</span><br><span class="line"><span class="keyword">import</span> org.springframework.stereotype.Service;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Configuration</span></span><br><span class="line"><span class="meta">@ComponentScan(basePackages = &quot;cn.worstone&quot;, excludeFilters = &#123;@ComponentScan.Filter(type = FilterType.ANNOTATION, value = &#123;Service.class&#125;)&#125;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SpringConfig</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
@@ -111,14 +111,14 @@
 <p>运行结果：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">bean name: org.springframework.context.annotation.internalConfigurationAnnotationProcessor</span><br><span class="line">bean name: org.springframework.context.annotation.internalAutowiredAnnotationProcessor</span><br><span class="line">bean name: org.springframework.context.annotation.internalCommonAnnotationProcessor</span><br><span class="line">bean name: org.springframework.context.event.internalEventListenerProcessor</span><br><span class="line">bean name: org.springframework.context.event.internalEventListenerFactory</span><br><span class="line">bean name: springConfig</span><br><span class="line">bean name: userService</span><br></pre></td></tr></table></figure>
 
-<h3 id="ComponentScan-重复标注使用"><a href="#ComponentScan-重复标注使用" class="headerlink" title="@ComponentScan 重复标注使用"></a>@ComponentScan 重复标注使用</h3><p>以这种方式使用，必须在配置类中添加 @Configuration 注解，否则无效。</p>
+<h2 id="ComponentScan-重复标注使用"><a href="#ComponentScan-重复标注使用" class="headerlink" title="@ComponentScan 重复标注使用"></a>@ComponentScan 重复标注使用</h2><p>以这种方式使用，必须在配置类中添加 @Configuration 注解，否则无效。</p>
 <ol>
 <li><p>如果使用 Java 8 及以上版本，则可以直接添加多个 @ComponentScan 注解来添加多个扫描规则。</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> cn.worstone.config;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.springframework.context.annotation.ComponentScan;</span><br><span class="line"><span class="keyword">import</span> org.springframework.context.annotation.Configuration;</span><br><span class="line"><span class="keyword">import</span> org.springframework.context.annotation.FilterType;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Configuration</span></span><br><span class="line"><span class="meta">@ComponentScan(basePackages = &quot;cn.worstone.dao&quot;)</span></span><br><span class="line"><span class="meta">@ComponentScan(basePackages = &quot;cn.worstone.service&quot;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SpringConfig</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
 <li><p>使用 @ComponentScans 注解来添加多个 @ComponentScan，从而添加多个扫描规则。</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> cn.worstone.config;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.springframework.context.annotation.*;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Configuration</span></span><br><span class="line"><span class="meta">@ComponentScans(&#123;@ComponentScan(basePackages = &quot;cn.worstone.dao&quot;), @ComponentScan(basePackages = &quot;cn.worstone.service&quot;)&#125;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SpringConfig</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
 </ol>
-<h3 id="ComponentScan-自定义过滤规则使用"><a href="#ComponentScan-自定义过滤规则使用" class="headerlink" title="@ComponentScan 自定义过滤规则使用"></a>@ComponentScan 自定义过滤规则使用</h3><p>前面使用过的 @Filter 注解，里面的 type 属性是一个 FilterType 的枚举类型。使用 CUSTOM 类型，就可以自定义过滤类，从而达到自定义过滤规则的目的。</p>
+<h2 id="ComponentScan-自定义过滤规则使用"><a href="#ComponentScan-自定义过滤规则使用" class="headerlink" title="@ComponentScan 自定义过滤规则使用"></a>@ComponentScan 自定义过滤规则使用</h2><p>前面使用过的 @Filter 注解，里面的 type 属性是一个 FilterType 的枚举类型。使用 CUSTOM 类型，就可以自定义过滤类，从而达到自定义过滤规则的目的。</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">enum</span> <span class="title">FilterType</span> </span>&#123;</span><br><span class="line">    ANNOTATION,</span><br><span class="line">    ASSIGNABLE_TYPE,</span><br><span class="line">    ASPECTJ,</span><br><span class="line">    REGEX,</span><br><span class="line">    CUSTOM</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>首先创建一个实现 TypeFilter 接口的 ServiceFilter 类，并实现其 match 方法。</p>
@@ -132,12 +132,15 @@
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">bean name: org.springframework.context.annotation.internalConfigurationAnnotationProcessor</span><br><span class="line">bean name: org.springframework.context.annotation.internalAutowiredAnnotationProcessor</span><br><span class="line">bean name: org.springframework.context.annotation.internalCommonAnnotationProcessor</span><br><span class="line">bean name: org.springframework.context.event.internalEventListenerProcessor</span><br><span class="line">bean name: org.springframework.context.event.internalEventListenerFactory</span><br><span class="line">bean name: springConfig</span><br><span class="line">bean name: serviceFilter</span><br><span class="line">bean name: userService</span><br></pre></td></tr></table></figure>
 
 <p>因为 cn.worstone.filter.ServiceFilter 以及 cn.worstone.service.UserService 两个类都符合条件，所以都被注入到了容器中。</p>
-<h3 id="参考资料："><a href="#参考资料：" class="headerlink" title="参考资料："></a>参考资料：</h3><p><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/64aac6461d5b">Spring注解——使用@ComponentScan自动扫描组件</a><br><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/27bf08ef9744">Spring对@Configuration的解析处理</a></p>
+<h2 id="参考资料："><a href="#参考资料：" class="headerlink" title="参考资料："></a>参考资料：</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/64aac6461d5b">Spring注解——使用@ComponentScan自动扫描组件</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/27bf08ef9744">Spring对@Configuration的解析处理</a></li>
+</ul>
 
         <p class="suffix-end">__END__</p>
         <div class="suffix-box">
             <div class="suffix-box-left">
-                <img src="https://cdn.jsdelivr.net/gh/first19326/hexo-liveforcode@master/static/image/sidebar/avatar.jpg" alt="Live For Code">
+                <img src="https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/image/sidebar/avatar.jpg" alt="Live For Code">
             </div>
             <div class="suffix-box-right">
                 <span class="suffix-box-title">文章作者</span>：Live For Code
@@ -174,6 +177,9 @@
             </div>
         
         <div class="article-prev-next">
+            
+                <a href="/2021/03/28/Mybatis%20%E9%85%8D%E7%BD%AE%E5%A4%9A%E4%B8%AA%E6%95%B0%E6%8D%AE%E6%BA%90%E7%9A%84%E6%96%B9%E5%BC%8F/" class="prev-prefix">« </a> 上一篇：    <a href="/2021/03/28/Mybatis%20%E9%85%8D%E7%BD%AE%E5%A4%9A%E4%B8%AA%E6%95%B0%E6%8D%AE%E6%BA%90%E7%9A%84%E6%96%B9%E5%BC%8F/" title="发布于 2021-03-28 12:00">Mybatis 配置多个数据源的方式</a>
+                <br>
             
             
                 <a href="/2020/09/21/Socket/" class="next-prefix">» </a> 下一篇：    <a href="/2020/09/21/Socket/" title="发布于 2020-09-21 12:00">Socket</a>
@@ -218,9 +224,9 @@
     <button class="menu-button-open">MENU</button>
     <div class="menu-cover"></div>
 </div>
-    <link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/gh/first19326/hexo-liveforcode@master/static/css/search.css">
-<script type="text/javascript" src="https://cdn.jsdelivr.net/gh/first19326/hexo-liveforcode@master/static/js/iscroll.js"></script>
-<script type="text/javascript" src="https://cdn.jsdelivr.net/gh/first19326/hexo-liveforcode@master/static/js/instantsearch.min.js"></script>
+    <link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/css/search.css">
+<script type="text/javascript" src="https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/js/iscroll.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/js/instantsearch.min.js"></script>
 <div class="search-window">
     <div class="search-content">
         <div class="search-content-icon">
@@ -246,8 +252,8 @@
 
     
         <div class="aplayer"></div>
-        <link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/gh/first19326/hexo-liveforcode@master/static/css/APlayer.css">
-        <script type="text/javascript" src="https://cdn.jsdelivr.net/gh/first19326/hexo-liveforcode@master/static/js/APlayer.min.js"></script>
+        <link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/css/APlayer.css">
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/js/APlayer.min.js"></script>
         <script type="text/javascript">
             const aplayer = new APlayer({
                 container: document.querySelector(".aplayer"),
@@ -339,14 +345,14 @@
         GitHubRepositories : 'Hexo-LiveForCode',
 
         BlogUser      : 'Live For Code',
-        BlogAvatar    : 'https://cdn.jsdelivr.net/gh/first19326/hexo-liveforcode@master/static/image/sidebar/avatar.jpg',
+        BlogAvatar    : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/image/sidebar/avatar.jpg',
         BlogStartDate : '2020-01-01',
 
         WebsiteTitleBlur         : '(◍´꒳`◍) Hi, Live For Code',
         WebsiteTitleBlurTimeOut  : 500,
         WebsiteTitleFocus        : '(*´∇｀*) 欢迎回来!',
         WebsiteTitleFocusTimeOut : 1000,
-        WebsiteFavicon           : 'https://cdn.jsdelivr.net/gh/first19326/hexo-liveforcode@master/static/image/website/logo.png',
+        WebsiteFavicon           : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/image/website/logo.png',
 
         ProgressBar: {
             id       : 'topProgressBar',
@@ -442,16 +448,16 @@
 
         HomeHeaderImage : [
             
-                'https://cdn.jsdelivr.net/gh/first19326/hexo-liveforcode@master/static/image/header/home.jpg',
+                'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/image/header/home.jpg',
             
-                'https://cdn.jsdelivr.net/gh/first19326/hexo-liveforcode@master/static/image/header/home.jpeg',
+                'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/image/header/home.jpeg',
             
         ],
         HomeBannerText  : '',
 
         ArticleHeaderImage : [
             
-                'https://cdn.jsdelivr.net/gh/first19326/hexo-liveforcode@master/static/image/header/article.jpg',
+                'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/image/header/article.jpg',
             
         ],
 
@@ -605,8 +611,8 @@
         Donate : {
             paypal  : '',
             bitcoin : '',
-            alipay  : 'https://cdn.jsdelivr.net/gh/first19326/hexo-liveforcode@master/static/image/donate/alipay.png',
-            wechat  : 'https://cdn.jsdelivr.net/gh/first19326/hexo-liveforcode@master/static/image/donate/wechat.png'
+            alipay  : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/image/donate/alipay.png',
+            wechat  : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/image/donate/wechat.png'
         },
 
         Code : {
@@ -656,7 +662,7 @@
         },
 
         Require : {
-            baseUrl     : 'https://cdn.jsdelivr.net/gh/first19326/hexo-liveforcode@master/static/js/',
+            baseUrl     : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/js/',
             waitSeconds : 100
         },
 
@@ -756,48 +762,48 @@
         },
 
         LazyLoad : {
-            default : 'https://cdn.jsdelivr.net/gh/first19326/hexo-liveforcode@master/static/image/website/lazyload.svg'
+            default : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/image/website/lazyload.svg'
         },
   
         Style : {
-            aplayer          : 'https://cdn.jsdelivr.net/gh/first19326/hexo-liveforcode@master/static/css/APlayer.css',
-            archive          : 'https://cdn.jsdelivr.net/gh/first19326/hexo-liveforcode@master/static/css/archive.css',
-            donate           : 'https://cdn.jsdelivr.net/gh/first19326/hexo-liveforcode@master/static/css/donate.css',
-            fancybox         : 'https://cdn.jsdelivr.net/gh/first19326/hexo-liveforcode@master/static/css/jquery.fancybox.css',
-            footer           : 'https://cdn.jsdelivr.net/gh/first19326/hexo-liveforcode@master/static/css/footer.css',
+            aplayer          : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/css/APlayer.css',
+            archive          : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/css/archive.css',
+            donate           : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/css/donate.css',
+            fancybox         : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/css/jquery.fancybox.css',
+            footer           : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/css/footer.css',
             iconfont         : 'https://at.alicdn.com/t/font_1546312_l3yohatebw.css',
-            index            : 'https://cdn.jsdelivr.net/gh/first19326/hexo-liveforcode@master/static/css/index.css',
-            menuBubble       : 'https://cdn.jsdelivr.net/gh/first19326/hexo-liveforcode@master/static/css/menu-bubble.css',
-            page             : 'https://cdn.jsdelivr.net/gh/first19326/hexo-liveforcode@master/static/css/page.css',
-            post             : 'https://cdn.jsdelivr.net/gh/first19326/hexo-liveforcode@master/static/css/post.css',
-            search           : 'https://cdn.jsdelivr.net/gh/first19326/hexo-liveforcode@master/static/css/search.css',
-            tocbot           : 'https://cdn.jsdelivr.net/gh/first19326/hexo-liveforcode@master/static/css/tocbot.css',
-            normal           : 'https://cdn.jsdelivr.net/gh/first19326/hexo-liveforcode@master/static/css/normal.css',
-            night            : 'https://cdn.jsdelivr.net/gh/first19326/hexo-liveforcode@master/static/css/night.css',
-            clipboard        : 'https://cdn.jsdelivr.net/gh/first19326/hexo-liveforcode@master/static/css/clipboard.css'
+            index            : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/css/index.css',
+            menuBubble       : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/css/menu-bubble.css',
+            page             : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/css/page.css',
+            post             : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/css/post.css',
+            search           : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/css/search.css',
+            tocbot           : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/css/tocbot.css',
+            normal           : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/css/normal.css',
+            night            : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/css/night.css',
+            clipboard        : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/css/clipboard.css'
         },
 
         Script: {
-            aplayer          : 'https://cdn.jsdelivr.net/gh/first19326/hexo-liveforcode@master/static/js/APlayer.min.js',
-            config           : 'https://cdn.jsdelivr.net/gh/first19326/hexo-liveforcode@master/static/js/require.config.js',
-            index            : 'https://cdn.jsdelivr.net/gh/first19326/hexo-liveforcode@master/static/js/index.js',
-            instantSearch    : 'https://cdn.jsdelivr.net/gh/first19326/hexo-liveforcode@master/static/js/instantsearch.min.js',
-            jQuery           : 'https://cdn.jsdelivr.net/gh/first19326/hexo-liveforcode@master/static/js/jquery-3.4.1.min.js',
-            loading          : 'https://cdn.jsdelivr.net/gh/first19326/hexo-liveforcode@master/static/js/loading.js',
-            meting           : 'https://cdn.jsdelivr.net/gh/first19326/hexo-liveforcode@master/static/js/Meting.min.js',
-            iscroll          : 'https://cdn.jsdelivr.net/gh/first19326/hexo-liveforcode@master/static/js/iscroll.js',
-            require          : 'https://cdn.jsdelivr.net/gh/first19326/hexo-liveforcode@master/static/js/require.min.js'
+            aplayer          : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/js/APlayer.min.js',
+            config           : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/js/require.config.js',
+            index            : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/js/index.js',
+            instantSearch    : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/js/instantsearch.min.js',
+            jQuery           : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/js/jquery-3.4.1.min.js',
+            loading          : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/js/loading.js',
+            meting           : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/js/Meting.min.js',
+            iscroll          : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/js/iscroll.js',
+            require          : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/js/require.min.js'
         },
 
         Font: {
-            LongCang   : 'https://cdn.jsdelivr.net/gh/first19326/hexo-liveforcode@master/static/font/LongCang.css',
-            Monda      : 'https://cdn.jsdelivr.net/gh/first19326/hexo-liveforcode@master/static/font/Monda.css',
-            NotoSansSC : 'https://cdn.jsdelivr.net/gh/first19326/hexo-liveforcode@master/static/font/NotoSansSC.css',
-            Playball   : 'https://cdn.jsdelivr.net/gh/first19326/hexo-liveforcode@master/static/font/Playball.css',
-            PTMono     : 'https://cdn.jsdelivr.net/gh/first19326/hexo-liveforcode@master/static/font/PTMono.css',
-            RobotoSlab : 'https://cdn.jsdelivr.net/gh/first19326/hexo-liveforcode@master/static/font/RobotoSlab.css',
-            Rosario    : 'https://cdn.jsdelivr.net/gh/first19326/hexo-liveforcode@master/static/font/Rosario.css',
-            UbuntuMono : 'https://cdn.jsdelivr.net/gh/first19326/hexo-liveforcode@master/static/font/UbuntuMono.css'
+            LongCang   : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/font/LongCang.css',
+            Monda      : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/font/Monda.css',
+            NotoSansSC : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/font/NotoSansSC.css',
+            Playball   : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/font/Playball.css',
+            PTMono     : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/font/PTMono.css',
+            RobotoSlab : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/font/RobotoSlab.css',
+            Rosario    : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/font/Rosario.css',
+            UbuntuMono : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/font/UbuntuMono.css'
         },
 
         Suffix : {
@@ -810,6 +816,6 @@
         }  
     };
 </script>
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/gh/first19326/hexo-liveforcode@master/static/js/index.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/js/index.js"></script>
 </body>
 </html>
